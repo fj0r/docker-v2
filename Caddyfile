@@ -1,0 +1,8 @@
+https://iffy.me:3333 {
+    root /var/www/
+    tls veekxt@gmail.com
+    proxy /websocket-message 127.0.0.1:44222 {
+        websocket
+        header_upstream -Origin
+    }
+}

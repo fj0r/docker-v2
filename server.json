@@ -13,7 +13,7 @@
         "settings": {
           "clients": [
             {
-              "id": "6714e296-aa2c-461e-aeec-a5a7d2d0faf9",
+              "id": "19bd6830-9c15-408e-90a3-c204ba40e1c3",
               "alterId": 32
             }
           ]
@@ -23,7 +23,7 @@
           "network": "ws",
           "security": "none",
           "wsSettings": {
-            "path": "/message"
+            "path": "/websocket-message"
           }
         },
         "listen": "127.0.0.1"
