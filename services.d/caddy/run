@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv sh
+
+sed -e 's!caddy-host!'"${CADDY_HOST}"'!'\
+    -e 's!caddy-tls-email!'"${CADDY_TLS_EMAIL}"'!'\
+    -i /etc/Caddyfile
+
+echo >&2 "starting caddy"
+
+exec /bin/parent/caddy --conf /etc/Caddyfile --log stdout --agree=$ACME_AGREE 2>&1
