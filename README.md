@@ -8,11 +8,10 @@ docker run -p 1081:1080 \
 
 
 ```bash
-docker run -p 3333:3333 \
-    -d --restart=always \
-    -v $(pwd)/caddy:/root/.caddy \
-    -e CADDY_HOST=iffy.me \
-    -e CADDY_TLS_EMAIL=nash@iffy.me \
-    --name=v2ray \
-    nnurphy/v2ray:caddy
+docker run --restart=always -d \
+    -p 8080:3333 \
+    -v $HOME/.acme.sh/iffy.me/fullchain.cer:/cer \
+    -v $HOME/.acme.sh/iffy.me/iffy.me.key:/key \
+    --name=v2ray-server \
+    nnurphy/v2ray:ngx
 ```

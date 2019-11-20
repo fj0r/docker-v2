@@ -9,4 +9,4 @@ mv server.json /etc/v2ray/config.json
 
 echo >&2 "starting v2ray"
 
-exec /usr/bin/v2ray -config=/etc/v2ray/config.json 2>&1
+exec /usr/bin/v2ray/v2ray -config=/etc/v2ray/config.json 2>&1
