@@ -25,12 +25,12 @@
       "settings":{
         "vnext":[
           {
-            "address":"iffy.me",
-            "port":3333,
+            "address":"...",
+            "port":8080,
             "users":[
               {
-                "id":"02fb1728-d04a-434f-a527-bceffabd31d1",
-                "alterId":32
+                "id":"11111111-2222-3333-4444-555555555555",
+                "alterId":64
               }
             ]
           }
@@ -41,10 +41,10 @@
         "network":"ws",
         "security":"tls",
         "wsSettings":{
-          "path":"/websocket_message"
+          "path":"/websocket"
         },
         "tlsSettings":{
-          "serverName":"iffy.me"
+          "serverName":"..."
         }
       }
     },

@@ -8,13 +8,13 @@
   "stats": {},
   "inbounds": [
     {
-      "port": 44222,
+      "port": 9999,
       "protocol": "vmess",
       "settings": {
         "clients": [
           {
-            "id": "02fb1728-d04a-434f-a527-bceffabd31d1",
-            "alterId": 32
+            "id": "11111111-2222-3333-4444-555555555555",
+            "alterId": 64
           }
         ]
       },
@@ -23,7 +23,7 @@
         "network": "ws",
         "security": "none",
         "wsSettings": {
-          "path": "/websocket_message"
+          "path": "/websocket"
         }
       },
       "listen": "127.0.0.1"
