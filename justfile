@@ -1,22 +1,17 @@
-gen-key:
+gen-key domain="localhost":
+    mkdir -p certs
     openssl req \
-        -newkey rsa:2048 \
-        -x509 \
-        -nodes \
-        -keyout server.key \
-        -new \
-        -out server.crt \
-        -subj /CN=localhost \
-        -sha256 \
-        -days 3650
+        -newkey rsa:4096 -nodes -sha256 -keyout certs/{{domain}}.key \
+        -x509 -days 365 -out certs/{{domain}}.crt \
+        -subj /CN={{domain}}
 
 test:
     docker run --rm \
         --name=v2ray-server \
         -p 8080:3333 \
         -e HOST=iffy.me \
-        -v $(pwd)/server.key:/key \
-        -v $(pwd)/server.crt:/crt \
+        -v $(pwd)/certs/localhost.key:/key \
+        -v $(pwd)/certs/localhost.crt:/crt \
         nnurphy/v2ray:ngx
 
 run:
