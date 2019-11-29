@@ -9,7 +9,7 @@ test:
     docker run --rm \
         --name=v2ray-server \
         -p 8080:3333 \
-        -e HOST=iffy.me \
+        -e HOST=localhost \
         -v $(pwd)/certs/localhost.key:/key \
         -v $(pwd)/certs/localhost.crt:/crt \
         nnurphy/v2ray:ngx
