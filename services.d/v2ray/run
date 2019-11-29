@@ -14,7 +14,7 @@ cat /etc/v2ray/client.json \
      | .outbounds[0].streamSettings.wsSettings.path=\"${WEBSOCKET_URL}\" \
      | .outbounds[0].settings.vnext[0].address=\"${HOST:-localhost}\" \
      | .outbounds[0].streamSettings.tlsSettings.serverName=\"${HOST:-localhost}\" \
-     "
+     " \
 > /client.json
 
 echo >&2 "starting v2ray"
