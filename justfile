@@ -14,6 +14,7 @@ test:
     docker run --rm \
         --name=v2ray-server \
         -p 8080:3333 \
+        -e HOST=iffy.me \
         -v $(pwd)/server.key:/key \
         -v $(pwd)/server.crt:/crt \
         nnurphy/v2ray:ngx
@@ -22,6 +23,7 @@ run:
     docker run --restart=always -d \
         --name=v2ray-server \
         -p 8080:3333 \
+        -e HOST=iffy.me \
         -v $HOME/.acme.sh/iffy.me/fullchain.cer:/crt \
         -v $HOME/.acme.sh/iffy.me/iffy.me.key:/key \
         nnurphy/v2ray:ngx
