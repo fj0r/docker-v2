@@ -8,7 +8,7 @@ gen-key domain="localhost":
 test:
     docker run --rm \
         --name=v2ray-server \
-        -p 8080:3333 \
+        -p 8090:3333 \
         -e HOST=localhost \
         -v $(pwd)/certs/localhost.key:/key \
         -v $(pwd)/certs/localhost.crt:/crt \

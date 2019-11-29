@@ -2,12 +2,15 @@
 
 export WEBSOCKET_URL=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 19 ; echo '')
 echo "websocket url is \`/${WEBSOCKET_URL}\`"
-sed -i 's!websocket!'"$WEBSOCKET_URL"'!' /etc/nginx/conf.d/default.conf
-
 export V2RAY_UUID=$(cat /proc/sys/kernel/random/uuid)
 echo "v2ray uuid is \`${V2RAY_UUID}\`"
-cat /etc/v2ray/config.json | jq ".inbounds[0].settings.clients[0].id=\"${V2RAY_UUID}\" | .inbounds[0].streamSettings.wsSettings.path=\"/${WEBSOCKET_URL}\"" > server.json
-mv server.json /etc/v2ray/config.json
+
+sed -e 's!websocket!'"$WEBSOCKET_URL"'!' \
+    -e 's!client-json!'"$V2RAY_UUID"'!' \
+    -i /etc/nginx/conf.d/default.conf
+
+cat /etc/v2ray/config.json | jq ".inbounds[0].settings.clients[0].id=\"${V2RAY_UUID}\" | .inbounds[0].streamSettings.wsSettings.path=\"/${WEBSOCKET_URL}\"" > /server.json
+mv /server.json /etc/v2ray/config.json
 
 cat /etc/v2ray/client.json \
 | jq " .outbounds[0].settings.vnext[0].users[0].id=\"${V2RAY_UUID}\" \
