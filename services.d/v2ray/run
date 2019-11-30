@@ -14,8 +14,10 @@ mv /server.json /etc/v2ray/config.json
 
 cat /etc/v2ray/client.json \
 | jq " .outbounds[0].settings.vnext[0].users[0].id=\"${V2RAY_UUID}\" \
-     | .outbounds[0].streamSettings.wsSettings.path=\"/${WEBSOCKET_URL}\" \
+     | .outbounds[0].settings.vnext[0].users[0].alterId=${ALTER_ID:-64} \
      | .outbounds[0].settings.vnext[0].address=\"${HOST:-localhost}\" \
+     | .outbounds[0].settings.vnext[0].port=${PORT:-8080} \
+     | .outbounds[0].streamSettings.wsSettings.path=\"/${WEBSOCKET_URL}\" \
      | .outbounds[0].streamSettings.tlsSettings.serverName=\"${HOST:-localhost}\" \
      " \
 > /client.json
