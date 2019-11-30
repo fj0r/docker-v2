@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv sh
 
-export WEBSOCKET_URL=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 19 ; echo '')
+export WEBSOCKET_URL=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 19)
 echo "websocket url is \`/${WEBSOCKET_URL}\`"
-export V2RAY_UUID=$(cat /proc/sys/kernel/random/uuid)
+export V2RAY_UUID=$(v2ctl uuid)
 echo "v2ray uuid is \`${V2RAY_UUID}\`"
 
 sed -e 's!websocket!'"$WEBSOCKET_URL"'!' \
