@@ -9,7 +9,7 @@ test:
     docker run --rm \
         --name=v2ray-server \
         -p 8090:443 \
-        -e HOST=localhost \
+        -e V2HOST=localhost \
         -v $(pwd)/certs/localhost.key:/key \
         -v $(pwd)/certs/localhost.crt:/crt \
         -v $PWD:/pub \
@@ -19,7 +19,7 @@ run:
     docker run --restart=always -d \
         --name=v2ray-server \
         -p 8443:443 \
-        -e HOST=iffy.me \
+        -e V2HOST=iffy.me \
         -v $HOME/.acme.sh/iffy.me/fullchain.cer:/crt \
         -v $HOME/.acme.sh/iffy.me/iffy.me.key:/key \
         nnurphy/v2ray:ngx
