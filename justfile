@@ -12,6 +12,7 @@ test:
         -e HOST=localhost \
         -v $(pwd)/certs/localhost.key:/key \
         -v $(pwd)/certs/localhost.crt:/crt \
+        -v $PWD:/pub \
         nnurphy/v2ray:ngx
 
 run:
@@ -27,4 +28,5 @@ build:
     docker build . -t nnurphy/v2ray
 
 buildn:
-    docker build . -t nnurphy/v2ray:ngx -f Dockerfile-ngx
+    docker build . -t nnurphy/v2ray:ngx -f Dockerfile-ngx \
+        --build-arg s6url=http://172.178.1.204:2015/s6-overlay-amd64.tar.gz

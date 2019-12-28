@@ -1,8 +1,0 @@
-https://caddy-host:80 {
-    root /var/www/
-    tls caddy-tls-email
-    proxy /websocket-message 127.0.0.1:44222 {
-        websocket
-        header_upstream -Origin
-    }
-}
