@@ -14,13 +14,13 @@ RUN set -ex \
       curl \
       nginx \
       jq \
-  ; curl --fail --silent -L ${s6url} | tar xzvf - -C /
-
-RUN set -ex \
+  ; curl --fail --silent -L ${s6url} | tar xzvf - -C / \
   ; sed -i '1i\daemon off;' /etc/nginx/nginx.conf \
   ; rm -rf /etc/nginx/sites-available/* \
   ; rm -rf /etc/nginx/sites-enabled/* \
-  ; mkdir -p /run/nginx
+  ; mkdir -p /run/nginx \
+  ; mkdir /pub \
+  ; ln -s /pub /srv/pub
 
 
 COPY services.d /etc/services.d
@@ -29,8 +29,5 @@ COPY 01-gen-token /etc/cont-init.d
 ENV PATH /usr/bin/v2ray:$PATH
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY client.json /etc/v2ray/client.json
-RUN set -ex \
-  ; mkdir /pub \
-  ; ln -s /pub /srv/pub
 
 ENTRYPOINT [ "/init" ]
