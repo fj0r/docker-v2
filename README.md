@@ -14,12 +14,16 @@ docker run \
 
 ## with nginx
 ```bash
-docker run --restart=always -d \
-    -p 8080:3333 \
-    -v $HOME/.acme.sh/iffy.me/fullchain.cer:/cer \
-    -v $HOME/.acme.sh/iffy.me/iffy.me.key:/key \
-    --name=v2ray-server \
-    nnurphy/v2ray:ngx
+srv-443:
+    docker run --restart=always -d \
+        --name=v2ray-srv \
+        -p 443:443 \
+        -e V2HOST=iffy.me \
+        -e V2PORT=443 \
+        -v $PWD/pub:/pub \
+        -v $HOME/.acme.sh/iffy.me/fullchain.cer:/crt \
+        -v $HOME/.acme.sh/iffy.me/iffy.me.key:/key \
+        nnurphy/v2ray:ngx
 ```
 
 ## standalone

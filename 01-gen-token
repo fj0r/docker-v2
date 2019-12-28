@@ -17,7 +17,7 @@ cat /etc/v2ray/client.json \
 | jq " .outbounds[0].settings.vnext[0].users[0].id=\"${V2UUID}\" \
      | .outbounds[0].settings.vnext[0].users[0].alterId=${V2ALTERID:-64} \
      | .outbounds[0].settings.vnext[0].address=\"${V2HOST:-localhost}\" \
-     | .outbounds[0].settings.vnext[0].port=${V2PORT:-8443} \
+     | .outbounds[0].settings.vnext[0].port=${V2PORT:-443} \
      | .outbounds[0].streamSettings.wsSettings.path=\"/${V2WSURL}\" \
      | .outbounds[0].streamSettings.tlsSettings.serverName=\"${V2HOST:-localhost}\" \
      " \
