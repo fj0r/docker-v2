@@ -1,5 +1,0 @@
-#!/usr/bin/with-contenv sh
-
-echo >&2 "starting httpbin"
-
-exec /usr/bin/go-httpbin 2>&1
