@@ -1,10 +1,12 @@
 FROM ubuntu:latest as builder
 
+ENV V2RAY_VERSION=4.22.0
 RUN apt-get update
 RUN apt-get install curl -y
 RUN curl -L -o /tmp/go.sh https://install.direct/go.sh
 RUN chmod +x /tmp/go.sh
 RUN /tmp/go.sh
+
 
 FROM alpine:3.11
 
