@@ -8,7 +8,7 @@ RUN chmod +x /tmp/go.sh
 RUN /tmp/go.sh
 
 
-FROM alpine:3.11
+FROM debian:buster-slim
 
 COPY --from=builder /usr/bin/v2ray/v2ray /usr/bin/v2ray/
 COPY --from=builder /usr/bin/v2ray/v2ctl /usr/bin/v2ray/
