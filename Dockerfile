@@ -1,6 +1,6 @@
 FROM ubuntu:latest as builder
 
-ENV V2RAY_VERSION=4.22.0
+ENV V2RAY_VERSION=4.22.1
 RUN apt-get update
 RUN apt-get install curl -y
 RUN curl -L -o /tmp/go.sh https://install.direct/go.sh
