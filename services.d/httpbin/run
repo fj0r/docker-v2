@@ -2,4 +2,4 @@
 
 echo >&2 "starting httpbin"
 
-exec /usr/bin/actix-httpbin 2>&1
+exec /usr/bin/httpbox -h 127.0.0.1 -p 8080 2>&1
