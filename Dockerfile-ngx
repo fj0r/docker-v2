@@ -12,6 +12,7 @@ RUN set -ex \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   \
   ; curl --fail --silent -L ${s6url} | tar xzvf - -C / \
+  ; chmod go-w /etc \
   ; sed -i '1i\daemon off;' /etc/nginx/nginx.conf \
   ; rm -rf /etc/nginx/sites-available/* \
   ; rm -rf /etc/nginx/sites-enabled/* \
