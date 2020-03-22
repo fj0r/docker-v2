@@ -14,17 +14,17 @@ RUN set -ex \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
         ca-certificates tzdata curl \
-  ; mkdir /var/log/v2ray/ \
-  ; chmod +x /usr/bin/v2ray/v2ctl \
-  ; chmod +x /usr/bin/v2ray/v2ray \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   \
   ; mkdir -p /usr/bin/v2ray \
+  ; mkdir /var/log/v2ray/ \
   ; curl -#L ${V2RAY_URL} \
-    | tar zxvf - -C /usr/bin/v2ray ${V2RAY_FILES}
+    | tar zxvf - -C /usr/bin/v2ray ${V2RAY_FILES} \
+  ; chmod +x /usr/bin/v2ray/v2ctl \
+  ; chmod +x /usr/bin/v2ray/v2ray
 
 ENV PATH /usr/bin/v2ray:$PATH
 
