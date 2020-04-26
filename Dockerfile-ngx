@@ -11,8 +11,11 @@ RUN set -ex \
       nginx \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   \
-  ; curl --fail --silent -L ${s6url} | tar xzvf - -C / \
-  ; chmod go-w /etc \
+  ; curl --fail --silent -L ${s6url} > /tmp/s6overlay.tar.gz \
+  ; tar xzf /tmp/s6overlay.tar.gz -C / --exclude="./bin" \
+  ; tar xzf /tmp/s6overlay.tar.gz -C /usr ./bin \
+  ; rm -f /tmp/s6overlay.tar.gz \
+  \
   ; sed -i '1i\daemon off;' /etc/nginx/nginx.conf \
   ; rm -rf /etc/nginx/sites-available/* \
   ; rm -rf /etc/nginx/sites-enabled/* \
