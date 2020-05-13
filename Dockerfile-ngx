@@ -1,8 +1,9 @@
 FROM nnurphy/v2ray
 
 ###### s6
+ENV s6overlay_version=2.0.0.0
 ARG httpbin_url=https://iffy.me/pub/httpbox_amd64.tar.gz
-ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
+ARG s6overlay_url=https://github.com/just-containers/s6-overlay/releases/download/v${s6overlay_version}/s6-overlay-amd64.tar.gz
 RUN set -ex \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
@@ -11,7 +12,7 @@ RUN set -ex \
       nginx \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   \
-  ; curl --fail --silent -L ${s6url} > /tmp/s6overlay.tar.gz \
+  ; curl --fail --silent -L ${s6overlay_url} > /tmp/s6overlay.tar.gz \
   ; tar xzf /tmp/s6overlay.tar.gz -C / --exclude="./bin" \
   ; tar xzf /tmp/s6overlay.tar.gz -C /usr ./bin \
   ; rm -f /tmp/s6overlay.tar.gz \
