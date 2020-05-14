@@ -1,7 +1,7 @@
 FROM nnurphy/v2ray
 
 ###### s6
-ENV s6overlay_version=2.0.0.0
+ENV s6overlay_version=2.0.0.1
 ARG httpbin_url=https://iffy.me/pub/httpbox_amd64.tar.gz
 ARG s6overlay_url=https://github.com/just-containers/s6-overlay/releases/download/v${s6overlay_version}/s6-overlay-amd64.tar.gz
 RUN set -ex \
