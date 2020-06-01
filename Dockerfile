@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ENV V2RAY_VERSION=4.23.1
+ENV V2RAY_VERSION=4.23.2
 ARG V2RAY_URL=https://iffy.me/pub/v2ray-linux-amd64.tar.gz
 ARG V2RAY_FILES="\
 v2ray \
