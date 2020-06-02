@@ -23,11 +23,11 @@ RUN set -ex \
   ; mkdir /var/log/v2ray/ \
   \
   ; mkdir -p /tmp/v2ray \
-  ; pushd /tmp/v2ray \
+  ; cd /tmp/v2ray \
   ; curl ${V2RAY_URL} > v2ray-linux-64.zip \
   ; unzip v2ray-linux-64.zip \
   ; mv ${V2RAY_FILES} /usr/bin/v2ray \
-  ; popd \
+  ; cd .. \
   ; rm -rf /tmp/v2ray
 
 ENV PATH /usr/bin/v2ray:$PATH
