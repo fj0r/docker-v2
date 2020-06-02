@@ -1,7 +1,7 @@
 FROM ubuntu:focal
 
-ENV V2RAY_VERSION=4.23.3
-ARG V2RAY_URL=https://iffy.me/pub/v2ray-linux-amd64.tar.gz
+ENV V2RAY_VERSION=v4.23.3
+ARG V2RAY_URL=https://github.com/v2ray/v2ray-core/releases/download/${V2RAY_VERSION}/v2ray-linux-64.zip
 ARG V2RAY_FILES="\
 v2ray \
 v2ctl \
@@ -13,7 +13,7 @@ RUN set -ex \
   ; sed -i 's/\(.*\)\(security\|deb\).debian.org\(.*\)main/\1ftp.cn.debian.org\3main contrib non-free/g' /etc/apt/sources.list \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
-        ca-certificates tzdata curl \
+        ca-certificates tzdata curl unzip \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
@@ -21,10 +21,14 @@ RUN set -ex \
   \
   ; mkdir -p /usr/bin/v2ray \
   ; mkdir /var/log/v2ray/ \
-  ; curl -#L ${V2RAY_URL} \
-    | tar zxvf - -C /usr/bin/v2ray ${V2RAY_FILES} \
-  ; chmod +x /usr/bin/v2ray/v2ctl \
-  ; chmod +x /usr/bin/v2ray/v2ray
+  \
+  ; mkdir -p /tmp/v2ray \
+  ; pushd /tmp/v2ray \
+  ; curl ${V2RAY_URL} > v2ray-linux-64.zip \
+  ; unzip v2ray-linux-64.zip \
+  ; mv ${V2RAY_FILES} /usr/bin/v2ray \
+  ; popd \
+  ; rm -rf /tmp/v2ray
 
 ENV PATH /usr/bin/v2ray:$PATH
 

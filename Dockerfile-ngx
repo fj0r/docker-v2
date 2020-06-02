@@ -4,33 +4,43 @@ FROM nnurphy/v2ray
 ENV s6overlay_version=2.0.0.1
 ARG httpbin_url=https://iffy.me/pub/httpbox_amd64.tar.gz
 ARG s6overlay_url=https://github.com/just-containers/s6-overlay/releases/download/v${s6overlay_version}/s6-overlay-amd64.tar.gz
+ARG watchexec_url=https://github.com/watchexec/watchexec/releases/download/${watchexec_version}/watchexec-${watchexec_version}-x86_64-unknown-linux-musl.tar.xz
+
 RUN set -ex \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
       jq \
       curl \
-      nginx \
-  ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
+  \
+  ; curl https://openresty.org/package/pubkey.gpg | apt-key add - \
+  ; echo "deb http://openresty.org/package/ubuntu focal main" \
+      | tee /etc/apt/sources.list.d/openresty.list \
+  ; apt-get update \
+  ; apt-get -y install --no-install-recommends openresty \
+  ; mkdir -p /etc/openresty/conf.d \
+  \
+  ; wget -q -O- ${watchexec_url} \
+      | tar Jxf - --strip-components=1 -C /usr/local/bin watchexec-${watchexec_version}-x86_64-unknown-linux-musl/watchexec \
   \
   ; curl --fail --silent -L ${s6overlay_url} > /tmp/s6overlay.tar.gz \
   ; tar xzf /tmp/s6overlay.tar.gz -C / --exclude="./bin" \
   ; tar xzf /tmp/s6overlay.tar.gz -C /usr ./bin \
   ; rm -f /tmp/s6overlay.tar.gz \
   \
-  ; sed -i '1i\daemon off;' /etc/nginx/nginx.conf \
-  ; rm -rf /etc/nginx/sites-available/* \
-  ; rm -rf /etc/nginx/sites-enabled/* \
-  \
   ; mkdir /pub \
   ; ln -s /pub /srv/pub \
-  ; curl ${httpbin_url} | tar zxvf - -C /usr/bin
+  ; curl ${httpbin_url} | tar zxvf - -C /usr/bin \
+  \
+  ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 
 COPY services.d /etc/services.d
 COPY 01-gen-token /etc/cont-init.d
+COPY reload-nginx /usr/local/bin
+COPY nginx.conf /etc/openresty
+COPY nginx-site.conf /etc/openresty/conf.d/default.conf
 
 ENV PATH /usr/bin/v2ray:$PATH
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY client.json /etc/v2ray/client.json
 
 ENTRYPOINT [ "/init" ]
