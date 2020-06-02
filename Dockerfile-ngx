@@ -9,6 +9,7 @@ ARG watchexec_url=https://github.com/watchexec/watchexec/releases/download/${wat
 RUN set -ex \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
+      gnupg \
       jq \
       curl \
   \
