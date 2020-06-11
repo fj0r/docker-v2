@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ENV V2RAY_VERSION=v4.23.4
+ENV V2RAY_VERSION=v4.24.2
 ARG V2RAY_URL=https://github.com/v2ray/v2ray-core/releases/download/${V2RAY_VERSION}/v2ray-linux-64.zip
 ARG V2RAY_FILES="\
 v2ray \
