@@ -2,7 +2,7 @@ FROM nnurphy/v2ray
 
 ###### s6
 ENV s6overlay_version=2.0.0.1
-ENV watchexec_version=1.13.1
+ENV watchexec_version=1.14.0
 ARG httpbin_url=https://iffy.me/pub/httpbox_amd64.tar.gz
 ARG s6overlay_url=https://github.com/just-containers/s6-overlay/releases/download/v${s6overlay_version}/s6-overlay-amd64.tar.gz
 ARG watchexec_url=https://github.com/watchexec/watchexec/releases/download/${watchexec_version}/watchexec-${watchexec_version}-x86_64-unknown-linux-musl.tar.xz
