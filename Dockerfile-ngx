@@ -3,7 +3,7 @@ FROM nnurphy/v2ray
 ###### s6
 ENV s6overlay_version=2.1.0.0
 ENV watchexec_version=1.14.1
-ARG httpbin_url=https://iffy.me/pub/httpbox_amd64.tar.gz
+ARG httpbox_url=https://iffy.me/pub/httpbox_amd64.tar.gz
 ARG s6overlay_url=https://github.com/just-containers/s6-overlay/releases/download/v${s6overlay_version}/s6-overlay-amd64.tar.gz
 ARG watchexec_url=https://github.com/watchexec/watchexec/releases/download/${watchexec_version}/watchexec-${watchexec_version}-x86_64-unknown-linux-musl.tar.xz
 
@@ -31,7 +31,7 @@ RUN set -ex \
   \
   ; mkdir /pub \
   ; ln -s /pub /srv/pub \
-  ; curl ${httpbin_url} | tar zxvf - -C /usr/bin \
+  ; curl ${httpbox_url} | tar zxvf - -C /usr/bin \
   \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 

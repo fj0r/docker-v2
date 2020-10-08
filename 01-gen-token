@@ -1,9 +1,9 @@
 #!/usr/bin/with-contenv sh
 
 
-export V2WSURL=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 19)
+export V2WSURL=${V2WSURL:-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 19)}
 echo "websocket url is \`/${V2WSURL}\`"
-export V2UUID=$(v2ctl uuid)
+export V2UUID=${V2UUID:-$(v2ctl uuid)}
 echo "v2ray uuid is \`${V2UUID}\`"
 
 sed -e 's!websocket!'"$V2WSURL"'!' \
