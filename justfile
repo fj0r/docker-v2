@@ -24,6 +24,17 @@ run:
         -v $HOME/.acme.sh/iffy.me/iffy.me.key:/key \
         nnurphy/v2ray:ngx
 
+server:
+    docker run --restart=always -d \
+        --name=v2ray-srv \
+        -p 8090:80 \
+        -e V2HOST=iffy.me \
+        -e V2PORT=443 \
+        -e V2WSURL=xxxxxxxxxxxxxxxxxxx \
+        -e V2UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
+        -v $PWD/pub:/pub \
+        nnurphy/v2ray:ngx
+
 build:
     docker build . -t nnurphy/v2ray
 
