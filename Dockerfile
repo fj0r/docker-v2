@@ -1,8 +1,7 @@
 FROM ubuntu:focal
 
-ENV V2RAY_VERSION=v4.33.1
-ARG V2RAY_URL=https://github.com/v2fly/v2ray-core/releases/download/${V2RAY_VERSION}/v2ray-linux-64.zip
-ARG V2RAY_FILES="\
+ARG v2ray_repo=v2fly/v2ray-core
+ARG v2ray_files="\
 v2ray \
 v2ctl \
 geoip.dat \
@@ -13,7 +12,7 @@ RUN set -ex \
   ; sed -i 's/\(.*\)\(security\|deb\).debian.org\(.*\)main/\1ftp.cn.debian.org\3main contrib non-free/g' /etc/apt/sources.list \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
-        ca-certificates tzdata wget curl unzip \
+        ca-certificates tzdata wget curl unzip jq \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
@@ -22,11 +21,13 @@ RUN set -ex \
   ; mkdir -p /usr/bin/v2ray \
   ; mkdir /var/log/v2ray/ \
   \
+  ; v2ray_version=$(curl -sSL -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${v2ray_repo}/releases | jq -r '.[0].tag_name') \
+  ; v2ray_url=https://github.com/${v2ray_repo}/releases/download/${v2ray_version}/v2ray-linux-64.zip \
   ; mkdir -p /tmp/v2ray \
   ; cd /tmp/v2ray \
-  ; wget ${V2RAY_URL} \
+  ; wget ${v2ray_url} \
   ; unzip v2ray-linux-64.zip \
-  ; mv ${V2RAY_FILES} /usr/bin/v2ray \
+  ; mv ${v2ray_files} /usr/bin/v2ray \
   ; cd .. \
   ; rm -rf /tmp/v2ray
 
