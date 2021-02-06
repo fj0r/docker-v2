@@ -15,7 +15,7 @@ RUN set -ex \
   ; apt-get update \
   ; DEBIAN_FRONTEND=noninteractive \
   ; apt-get install -y --no-install-recommends \
-        ca-certificates tzdata wget curl unzip jq \
+        ca-certificates tzdata locales wget curl unzip jq \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
