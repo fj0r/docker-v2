@@ -13,6 +13,7 @@ geosite.dat \
 RUN set -ex \
   ; sed -i 's/\(.*\)\(security\|deb\).debian.org\(.*\)main/\1ftp.cn.debian.org\3main contrib non-free/g' /etc/apt/sources.list \
   ; apt-get update \
+  ; DEBIAN_FRONTEND=noninteractive \
   ; apt-get install -y --no-install-recommends \
         ca-certificates tzdata wget curl unzip jq \
   \
