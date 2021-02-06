@@ -1,5 +1,7 @@
 FROM ubuntu:focal
 
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
+
 ARG v2ray_repo=v2fly/v2ray-core
 ARG v2ray_files="\
 v2ray \
@@ -16,6 +18,10 @@ RUN set -ex \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
+  ; sed -i /etc/locale.gen \
+		-e 's/# \(en_US.UTF-8 UTF-8\)/\1/' \
+		-e 's/# \(zh_CN.UTF-8 UTF-8\)/\1/' \
+	; locale-gen \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   \
   ; mkdir -p /usr/bin/v2ray \
