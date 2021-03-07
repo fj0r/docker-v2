@@ -5,31 +5,36 @@ ARG s6overlay_repo=just-containers/s6-overlay
 ARG watchexec_repo=watchexec/watchexec
 ARG httpbox_url=https://iffy.me/pub/httpbox_amd64.tar.gz
 
+ENV BUILD_DEPS software-properties-common build-essential
 RUN set -ex \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
       gnupg xz-utils \
       jq \
       curl \
+	  libpcre3-dev libssl-dev zlib1g-dev \
+	  ${BUILD_DEPS} \
   \
-  ; curl https://openresty.org/package/pubkey.gpg | apt-key add - \
-  ; echo "deb http://openresty.org/package/ubuntu focal main" \
-      | tee /etc/apt/sources.list.d/openresty.list \
-  ; apt-get update \
-  ; apt-get -y install --no-install-recommends openresty \
-  ; mkdir -p /etc/openresty/conf.d \
+  ; OPENRESTY_VERSION=1.19.3.1 \
+  ; wget -qO- https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz | tar -zxf - \
+  ; cd openresty-${OPENRESTY_VERSION} \
+  ; ./configure --prefix=/opt/openresty \
+        --with-luajit \
+        --with-http_iconv_module \
+  ; make \
+  ; make install \
+  ; cd .. && rm -rf openresty-${OPENRESTY_VERSION} \
+  ; apt-get -y remove ${BUILD_DEPS} \
   \
   ; watchexec_version=$(curl -sSL -H "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/${watchexec_repo}/releases | jq -r '.[0].tag_name') \
   ; watchexec_url=https://github.com/${watchexec_repo}/releases/download/${watchexec_version}/watchexec-${watchexec_version}-x86_64-unknown-linux-musl.tar.xz \
-  ; s6overlay_version=$(curl -sSL -H "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/${s6overlay_repo}/releases | jq -r '.[0].tag_name') \
-  ; s6overlay_url=https://github.com/${s6overlay_repo}/releases/download/${s6overlay_version}/s6-overlay-amd64.tar.gz \
   ; wget -q -O- ${watchexec_url} \
       | tar Jxf - --strip-components=1 -C /usr/local/bin watchexec-${watchexec_version}-x86_64-unknown-linux-musl/watchexec \
   \
-  ; curl --fail --silent -L ${s6overlay_url} > /tmp/s6overlay.tar.gz \
-  ; tar xzf /tmp/s6overlay.tar.gz -C / --exclude="./bin" \
-  ; tar xzf /tmp/s6overlay.tar.gz -C /usr ./bin \
-  ; rm -f /tmp/s6overlay.tar.gz \
+  ; s6overlay_version=$(curl -sSL -H "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/${s6overlay_repo}/releases | jq -r '.[0].tag_name') \
+  ; s6overlay_url=https://github.com/${s6overlay_repo}/releases/download/${s6overlay_version}/s6-overlay-amd64.tar.gz \
+  ; curl --fail --silent -L ${s6overlay_url} \
+    | tar xzvf - -C / \
   \
   ; mkdir /pub \
   ; ln -s /pub /srv/pub \
