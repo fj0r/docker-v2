@@ -32,8 +32,8 @@ RUN set -ex \
   ; v2ray_url=https://github.com/${v2ray_repo}/releases/download/${v2ray_version}/v2ray-linux-64.zip \
   ; mkdir -p /tmp/v2ray \
   ; cd /tmp/v2ray \
-  ; wget ${v2ray_url} \
-  ; unzip v2ray-linux-64.zip \
+  ; wget -qO v2ray.zip ${v2ray_url} \
+  ; unzip v2ray.zip \
   ; mv ${v2ray_files} /usr/bin/v2ray \
   ; cd .. \
   ; rm -rf /tmp/v2ray
