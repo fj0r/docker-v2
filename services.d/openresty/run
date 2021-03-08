@@ -2,4 +2,4 @@
 
 echo >&2 "starting openresty"
 
-exec /usr/local/openresty/bin/openresty 2>&1
+exec /opt/openresty/bin/openresty 2>&1
