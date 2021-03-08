@@ -24,6 +24,8 @@ RUN set -ex \
   ; make \
   ; make install \
   ; cd .. && rm -rf openresty-${OPENRESTY_VERSION} \
+  ; ln -fs /opt/openresty/nginx/conf /etc/openresty \
+  ; mkdir -p /etc/openresty/conf.d \
   ; apt-get -y remove ${BUILD_DEPS} \
   \
   ; watchexec_version=$(curl -sSL -H "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/${watchexec_repo}/releases | jq -r '.[0].tag_name') \
