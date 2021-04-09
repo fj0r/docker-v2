@@ -15,7 +15,7 @@ RUN set -ex \
   ; apt-get update \
   ; DEBIAN_FRONTEND=noninteractive \
   ; apt-get install -y --no-install-recommends \
-        ca-certificates tzdata locales wget curl unzip jq \
+        ca-certificates tzdata locales curl unzip jq \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
@@ -32,7 +32,7 @@ RUN set -ex \
   ; v2ray_url=https://github.com/${v2ray_repo}/releases/download/${v2ray_version}/v2ray-linux-64.zip \
   ; mkdir -p /tmp/v2ray \
   ; cd /tmp/v2ray \
-  ; wget -qO v2ray.zip ${v2ray_url} \
+  ; curl -sSLo v2ray.zip ${v2ray_url} \
   ; unzip v2ray.zip \
   ; mv ${v2ray_files} /usr/bin/v2ray \
   ; cd .. \
