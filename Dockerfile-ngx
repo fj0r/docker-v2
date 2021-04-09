@@ -18,7 +18,7 @@ RUN set -ex \
 	  ${BUILD_DEPS} \
   \
   ; OPENRESTY_VERSION=1.19.3.1 \
-  ; wget -qO- https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz | tar -zxf - \
+  ; curl -sSL https://openresty.org/download/openresty-${OPENRESTY_VERSION}.tar.gz | tar -zxf - \
   ; cd openresty-${OPENRESTY_VERSION} \
   ; ./configure --prefix=/opt/openresty \
         --with-luajit \
@@ -32,7 +32,7 @@ RUN set -ex \
   \
   ; watchexec_version=$(curl -sSL -H "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/${watchexec_repo}/releases | jq -r '.[0].tag_name') \
   ; watchexec_url=https://github.com/${watchexec_repo}/releases/download/${watchexec_version}/watchexec-${watchexec_version}-x86_64-unknown-linux-musl.tar.xz \
-  ; wget -q -O- ${watchexec_url} \
+  ; curl -sSL ${watchexec_url} \
       | tar Jxf - --strip-components=1 -C /usr/local/bin watchexec-${watchexec_version}-x86_64-unknown-linux-musl/watchexec \
   \
   ; s6overlay_version=$(curl -sSL -H "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/${s6overlay_repo}/releases | jq -r '.[0].tag_name') \
