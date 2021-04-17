@@ -1,4 +1,4 @@
-FROM nnurphy/v2ray
+FROM nashv1/v2ray
 
 ###### s6
 ARG s6overlay_repo=just-containers/s6-overlay
