@@ -6,7 +6,7 @@ echo "websocket url is \`/${V2WSURL}\`"
 export V2UUID=${V2UUID:-$(v2ctl uuid)}
 echo "v2ray uuid is \`${V2UUID}\`"
 
-sed -e 's!websocket!'"$V2WSURL"'!' \
+sed -e 's!v2ray-endpoint!'"$V2WSURL"'!' \
     -e 's!client-json!'"$V2UUID"'!' \
     -i /etc/nginx/conf.d/default.conf
 
