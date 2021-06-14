@@ -9,7 +9,7 @@ RUN git clone --depth=1 https://github.com/cloudflare/boringtun.git \
 FROM debian:testing-slim
 
 WORKDIR /app
-COPY --from=builder /src/target/release/boringtun /usr/local/bin
+COPY --from=builder /src/boringtun/target/release/boringtun /usr/local/bin
 
 ENV WG_LOG_LEVEL=info \
     WG_THREADS=4 \
@@ -17,5 +17,13 @@ ENV WG_LOG_LEVEL=info \
     WG_QUICK_USERSPACE_IMPLEMENTATION=/usr/local/bin
 
 RUN apt-get update \
- && apt-get install -y --no-install-recommends wireguard-tools iproute2 iptables tcpdump
+ && echo "resolvconf resolvconf/linkify-resolvconf boolean false" \
+      | debconf-set-selections \
+ && DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y --no-install-recommends \
+      wireguard-tools \
+      iproute2 iptables \
+      tcpdump \
+      resolvconf
+
 CMD ["wg-quick", "up", "$1"]
