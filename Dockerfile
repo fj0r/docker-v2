@@ -1,4 +1,4 @@
-FROM debian:testing-slim
+FROM fj0rd/io:os
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
 
@@ -10,19 +10,14 @@ geoip.dat \
 geosite.dat \
 "
 
-RUN set -ex \
-  ; sed -i 's/\(.*\)\(security\|deb\).debian.org\(.*\)main/\1ftp.cn.debian.org\3main contrib non-free/g' /etc/apt/sources.list \
+RUN set -eux \
   ; apt-get update \
   ; DEBIAN_FRONTEND=noninteractive \
   ; apt-get install -y --no-install-recommends \
-        ca-certificates tzdata locales curl unzip jq \
+        ca-certificates tzdata curl unzip jq \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
-  ; sed -i /etc/locale.gen \
-		-e 's/# \(en_US.UTF-8 UTF-8\)/\1/' \
-		-e 's/# \(zh_CN.UTF-8 UTF-8\)/\1/' \
-	; locale-gen \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   \
   ; mkdir -p /usr/bin/v2ray \
