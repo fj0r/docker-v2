@@ -17,5 +17,6 @@ RUN set -eux \
   ; curl -sSL ${clash_url} | gzip -d > /usr/local/bin/clash \
   ; chmod +x /usr/local/bin/clash
 
-ENTRYPOINT [ "clash", "-f", "/config.yml"]
+ENTRYPOINT [ "clash", "-f"]
+CMD [ "/config/index.yml" ]
 
